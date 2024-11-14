@@ -1,4 +1,6 @@
-﻿namespace GenericCollections
+﻿using System.Collections.Generic;
+
+namespace GenericCollections
 {
     internal class Order
     {
@@ -30,9 +32,9 @@
 
         public override string ToString()
         {
-            return ($"Order {orderIdCounter}:\n" +
-                $"{Total}\n" +
-                $"Amount: {_tableNumber}");
+            return ($"Order {_orderId}:" +
+                $"Amount: {_tableNumber}, Total: {Total}");
+                
         }
     }
 
