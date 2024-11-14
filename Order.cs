@@ -15,5 +15,25 @@
             _orderItems = orderItems;
             _tableNumber = tableNumber;
         }
+
+        //decimal for the exact number with money
+        //method for calculate the total price of the order
+        public decimal Total()
+        {
+            decimal total = 0;
+            foreach(var item in _orderItems)
+            {
+                total += item.Price;
+            }
+            return total;
+        }
+
+        public override string ToString()
+        {
+            return ($"Order {orderIdCounter}:\n" +
+                $"{Total}\n" +
+                $"Amount: {_tableNumber}");
+        }
     }
+
 }

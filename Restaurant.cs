@@ -1,53 +1,62 @@
 ﻿namespace GenericCollections
 {
- 
+
     internal class Restaurant
     {
-        //to represent the menu
-        private List<MenuItem> menu = new List<MenuItem>();
-        //FIFO - first in, first out
-        Queue<Order> orders = new Queue<Order>();
+        private List<MenuItem> _menuItem;
+        private Queue<Order> _order;
 
-        //adds new cuisine in the menu and add it to the console?
+        public Restaurant()
+        {
+            _menuItem = new List<MenuItem>();
+            _order = new Queue<Order>();
+        }
         public void AddToMenu(MenuItem menuItem)
         {
-
+            _menuItem.Add(menuItem);
         }
 
-        //shows everything in the menu
         public void ShowMenu()
         {
-            foreach(var item in menu)
+            Console.WriteLine("Menu: ");
+            //menu is the var varible in _menuItem
+            foreach (var menu in _menuItem)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(menu);
+            }
+            Console.WriteLine("----------------------");
+        }
+
+        public void CreateOrder(Order order)
+        {
+            _order.Enqueue(order);
+            Console.WriteLine($"Order: {order}");
+        }
+
+        //dequeing part
+        public void HandleOrder()
+        {
+            if (_order.Count > 0)
+            {
+                _order.Dequeue();
+                Console.WriteLine($"Handleing order: {_order}");
+            }
+            else
+            {
+                Console.WriteLine("No more orders in line");
             }
         }
 
-        //enters new order in line and logs it to the console
-        public void CreateOrder(Order order)
-        {
-
-        }
-
-        //handles (dequeue) the first order and logs det in the console
-        public void HandleOrder()
-        {
-
-        }
-
-        //Show all the orders in line in the console
         public void ShowOrder()
         {
 
         }
 
-        //outputs the next in line order and logs it in the console
         public void ShowNextOrer()
         {
-
+            _order.Peek();
         }
 
-        //outputs the amount orders in line
         public void ShowOrderCount()
         {
 
