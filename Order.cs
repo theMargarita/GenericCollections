@@ -18,7 +18,6 @@ namespace GenericCollections
             _tableNumber = tableNumber;
         }
 
-        //decimal for the exact number with money
         //method for calculate the total price of the order
         public decimal Total()
         {
@@ -32,9 +31,9 @@ namespace GenericCollections
 
         public override string ToString()
         {
-            return ($"Order {_orderId}:" +
-                $"Amount: {_tableNumber}, Total: {Total}");
-                
+
+            return ($"Order {orderIdCounter}:" +
+                $"Amount: {_tableNumber}, Total: {Total}, {_orderItems}");
         }
     }
 
