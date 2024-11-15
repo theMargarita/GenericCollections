@@ -5,8 +5,8 @@ namespace GenericCollections
     internal class Restaurant
     {
         //just wanted to see if there would be any different
-        private List<MenuItem> _menuItem;
-        private Queue<Order> _order = new Queue<Order>();
+        private List<MenuItem> _menuItem = new List<MenuItem>();
+        private Queue<Order> _order;
 
         public Restaurant()
         {
@@ -24,7 +24,6 @@ namespace GenericCollections
         //method explains it
         public void ShowMenu()
         {
-
             Console.WriteLine("----------------------");
             Console.WriteLine("Menu: ");
             //menu is the var varible in _menuItem
@@ -35,13 +34,21 @@ namespace GenericCollections
             Console.WriteLine("----------------------\n");
         }
 
-        //creates and adds the order
         public void CreateOrder(Order order)
         {
-            _order.Enqueue(order);
-            Console.WriteLine($"Order: {order}");
-            //Console.WriteLine("----------------------");
+            //null checks the order parameter and ensure it is not null before enqueuing 
+            if (order != null)
+            {
+                _order.Enqueue(order);
+                Console.WriteLine($"The order is now created: {order}");
+                Console.WriteLine("----------------------");
+            }
+            else
+            {
+                Console.WriteLine("Can not create an empty order");
+            }
         }
+
 
         //dequeing part - handles the order
         public void HandleOrder()
@@ -62,28 +69,51 @@ namespace GenericCollections
 
         public void ShowOrder()
         {
-            //shows every order in que/line (samesame)
-            foreach(var orders in _order)
+            //count shows every order and foreach shows every order in line
+            if (_order.Count > 0)
             {
-                Console.WriteLine($"There are {orders} orders in line.");
-                //Console.WriteLine("----------------------");
+                //shows every order in que/line (samesame)
+                //Console.WriteLine("Current orders in line: ");
+                foreach (var order in _order)
+                {
+                    Console.WriteLine($"There are {order} orders in line.");
+                }
             }
+            else
+            {
+                Console.WriteLine("The que is empty.");
+            }
+            Console.WriteLine("----------------------");
         }
 
         //method name explains it
-        public void ShowNextOrer()
+        public void ShowNextOrder()
         {
             //peek peeks into the next order
-            Console.WriteLine($"Next order in line: {_order.Peek()}");
+            if (_order.Count > 0)
+            {
+                Console.WriteLine($"Next order in line: {_order.Peek()}");
+                Console.WriteLine("----------------------");
+
+            }
+            else
+            {
+                Console.WriteLine("The que is empty");
+            }
         }
 
         //writes out the amount the orders in que
         public void ShowOrderCount()
         {
-            foreach(var showOrder in _order)
-            {
-                Console.WriteLine(showOrder);
-            }
+            //shows the count in the order
+            Console.WriteLine(_order.Count);
+            Console.WriteLine("----------------------");
         }
     }
 }
+
+//returns a copy to preserve encapulation
+//public Queue<Order> order()
+//{
+//    return new Queue<Order>(_order);
+//}
