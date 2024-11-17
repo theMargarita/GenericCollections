@@ -1,58 +1,60 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
 namespace GenericCollections
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            //adding items to the menu
+            string NL = Environment.NewLine; // shortcut
+            string NORMAL = Console.IsOutputRedirected ? "" : "\x1b[39m";
+            string GREEN = Console.IsOutputRedirected ? "" : "\x1b[92m";
+            string YELLOW = Console.IsOutputRedirected ? "" : "\x1b[93m";
+            string CYAN = Console.IsOutputRedirected ? "" : "\x1b[96m";
+
+            //adding items to the menu - constructor 
             Restaurant restaurant = new Restaurant();
-            //classname, variblename and new items to the class+methods and stuff
-            restaurant.AddToMenu(new MenuItem(1, "Tomato soup", 40m));
-            restaurant.AddToMenu(new MenuItem(2, "French onion soup", 30m));
-            restaurant.AddToMenu(new MenuItem(3, "Miso soup", 65m));
-            restaurant.AddToMenu(new MenuItem(4, "Ramen soup", 75m));
-            restaurant.AddToMenu(new MenuItem(5, "Fish soup", 50m));
-            //varible and show mehtod 
+
+            MenuItem menu1 = new MenuItem(1, "Tomato soup", 40m );
+            MenuItem menu2 = new MenuItem(2, "French Onion soup", 35m);
+            MenuItem menu3 = new MenuItem(3, "Miso soup", 80m);
+            MenuItem menu4 = new MenuItem(4, "Ramen soup", 95m);
+            MenuItem menu5 = new MenuItem(5, "Italian soup", 50m);
+
+            restaurant.AddToMenu(menu1);
+            restaurant.AddToMenu(menu2);
+            restaurant.AddToMenu(menu3);
+            restaurant.AddToMenu(menu4);
+            restaurant.AddToMenu(menu5);
+
             restaurant.ShowMenu();
-            //fase 1 ends
 
+            Console.WriteLine($"{CYAN}Added orders:{NORMAL} ");
+            
+            var orderMenu1 = new List<MenuItem> { menu1, menu2};
+            var order1 = new Order(orderMenu1, 11);
+            restaurant.CreateOrder(order1);
 
-            //to the items in the menuItem
-            List<MenuItem> order1 = new List<MenuItem> { new MenuItem(1, "Tomato soup", 40m), 
-            new MenuItem(2, "French onion soup", 30m), new MenuItem(4, "Ramen soup", 75m)};
+            var orderMenu2 = new List<MenuItem> { menu3, menu4 };
+            var order2 = new Order(orderMenu2, 22);
+            restaurant.CreateOrder(order2);
 
-            List<MenuItem> order2 = new List<MenuItem> { new MenuItem(2, "French onion soup", 40m),
-            new MenuItem(2, "French onion soup", 30m), new MenuItem(5, "Fish soup", 75m)};
-
-            List<MenuItem> order3 = new List<MenuItem> { new MenuItem(3, "Miso soup", 65m),
-            new MenuItem(5, "Fish soup", 65m), new MenuItem(4, "Ramen soup", 75m)};
-
-
-            Console.ReadKey();
-
-            restaurant.CreateOrder(new Order(order1, 1));
-            restaurant.CreateOrder(new Order(order2, 2));
-            restaurant.CreateOrder(new Order(order3, 3));
-
-
-            //Order orders1 = new Order(order1, 1);
-            //Order orders2 = new Order(order2, 2);
-            //Order orders3 = new Order(order3, 3);
-            //restaurant.CreateOrder(orders1);
-            //restaurant.CreateOrder(orders2);
-            //restaurant.CreateOrder(orders3);
+            var orderMenu3 = new List<MenuItem> { menu1, menu5 };
+            var order3 = new Order(orderMenu3, 33);
+            restaurant.CreateOrder(order3);
 
             restaurant.ShowOrder();
-            Console.ReadKey();
 
             restaurant.HandleOrder();
-            Console.ReadKey();
 
-            restaurant.ShowNextOrder();
-            Console.ReadKey();
+
 
             restaurant.ShowOrderCount();
+
+            restaurant.ShowNextOrder();
+
         }
     }
 }

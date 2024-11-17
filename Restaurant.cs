@@ -1,32 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace GenericCollections
 {
     internal class Restaurant
     {
-        //just wanted to see if there would be any different
-        private List<MenuItem> _menuItem = new List<MenuItem>();
-        private Queue<Order> _order;
+        string NL = Environment.NewLine; // shortcut
+        string NORMAL = Console.IsOutputRedirected ? "" : "\x1b[39m";
+        string GREEN = Console.IsOutputRedirected ? "" : "\x1b[92m";
+        string YELLOW = Console.IsOutputRedirected ? "" : "\x1b[93m";
+        string CYAN = Console.IsOutputRedirected ? "" : "\x1b[96m";
 
-        public Restaurant()
-        {
-            _menuItem = new List<MenuItem>();
-            _order = new Queue<Order>();
-        }
+        public List<MenuItem> _menuItem = new List<MenuItem>();
+        public Queue<Order> _order = new Queue<Order>();
 
-        //adds food to the menu
+        //adds le plat to the menu
         public void AddToMenu(MenuItem menuItem)
         {
             _menuItem.Add(menuItem);
-            Console.WriteLine($"{menuItem} is now added to the menu.");
+            //to specify the namne of le plat
+            Console.WriteLine($"{CYAN}Added course:{NORMAL} {menuItem.Name} ");
         }
 
         //method explains it
         public void ShowMenu()
         {
-            Console.WriteLine("----------------------");
-            Console.WriteLine("Menu: ");
-            //menu is the var varible in _menuItem
+            Console.WriteLine($"\n{CYAN}Menu:{NORMAL} ");
             foreach (var menu in _menuItem)
             {
                 Console.WriteLine(menu);
@@ -36,84 +37,68 @@ namespace GenericCollections
 
         public void CreateOrder(Order order)
         {
-            //null checks the order parameter and ensure it is not null before enqueuing 
-            if (order != null)
-            {
-                _order.Enqueue(order);
-                Console.WriteLine($"The order is now created: {order}");
-                Console.WriteLine("----------------------");
-            }
-            else
-            {
-                Console.WriteLine("Can not create an empty order");
-            }
+            //null checks the order parameter and ensure it is not null before enqueuing
+            _order.Enqueue(order);
+            Console.WriteLine($"Order {_order.Count} is now added");
         }
 
 
         //dequeing part - handles the order
         public void HandleOrder()
         {
-            if (_order.Count > 0)
-            {
-                ToString();
-                Console.WriteLine($"Handleing order: {_order.Dequeue()}");
-                Console.WriteLine("----------------------");
-            }
-            else
-            {
-                Console.WriteLine("No more orders in line");
-            }
-        }
+            var items = new List<MenuItem>();
+            //for (int i = 0; i > _order.Count; i++)
+            //{
+               
+            //}
+            //if(_order.Count > 0)
+            //{
+            //    _order.Dequeue();
+            //}
+            //ToString();
+            Console.WriteLine($"{CYAN}Handling:{NORMAL}\nOrder: {_order.Count}");
+            Console.WriteLine("----------------------");
 
-        //methodname explains it
+        }
 
         public void ShowOrder()
         {
+            Console.WriteLine();
+
             //count shows every order and foreach shows every order in line
-            if (_order.Count > 0)
+            Console.WriteLine($"{CYAN}Current orders in line:{NORMAL} ");
+
+            //_order.Dequeue();
+            foreach (var order in _order)
             {
-                //shows every order in que/line (samesame)
-                //Console.WriteLine("Current orders in line: ");
-                foreach (var order in _order)
-                {
-                    Console.WriteLine($"There are {order} orders in line.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("The que is empty.");
+                Console.WriteLine(order.PrintOrder);
             }
             Console.WriteLine("----------------------");
         }
 
-        //method name explains it
         public void ShowNextOrder()
         {
             //peek peeks into the next order
+            Console.WriteLine($"{CYAN}Next order in line:{NORMAL} ");
             if (_order.Count > 0)
             {
-                Console.WriteLine($"Next order in line: {_order.Peek()}");
-                Console.WriteLine("----------------------");
-
+                Console.WriteLine(_order.Peek());
             }
             else
             {
                 Console.WriteLine("The que is empty");
             }
+            Console.WriteLine();
         }
 
         //writes out the amount the orders in que
         public void ShowOrderCount()
         {
             //shows the count in the order
-            Console.WriteLine(_order.Count);
-            Console.WriteLine("----------------------");
+            Console.WriteLine();
+            Console.WriteLine($"{YELLOW}Orders in line:{NORMAL}\n{_order.Count}");
+            Console.WriteLine();
         }
     }
 }
 
-//returns a copy to preserve encapulation
-//public Queue<Order> order()
-//{
-//    return new Queue<Order>(_order);
-//}
