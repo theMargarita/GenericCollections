@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-
-namespace GenericCollections
+﻿namespace GenericCollections
 {
     internal class Restaurant
     {
@@ -39,39 +34,36 @@ namespace GenericCollections
         {
             //null checks the order parameter and ensure it is not null before enqueuing
             _order.Enqueue(order);
-            Console.WriteLine($"Order {_order.Count} is now added");
+            Console.WriteLine($"{YELLOW}Order {_order.Count}{NORMAL} is now added");
         }
-
 
         //dequeing part - handles the order
         public void HandleOrder()
         {
-            var items = new List<MenuItem>();
-            //for (int i = 0; i > _order.Count; i++)
-            //{
-               
-            //}
-            //if(_order.Count > 0)
-            //{
-            //    _order.Dequeue();
-            //}
-            //ToString();
-            Console.WriteLine($"{CYAN}Handling:{NORMAL}\nOrder: {_order.Count}");
-            Console.WriteLine("----------------------");
-
+            if (_order.Count > 0)
+            {
+                //use nextOrder to later call the method with correct order handleing 
+                var nextOrder = _order.Dequeue();
+                Console.WriteLine($"{CYAN}Handeling: {NORMAL}");
+                //to print the order from the method in orderclass
+                nextOrder.PrintOrder();
+                nextOrder.FinishedOrder();
+                Console.WriteLine($"{CYAN}Finished order:{NORMAL} \n{nextOrder}");
+            }
+            else
+            {
+                Console.WriteLine("No more orders to handle.");
+            }
         }
 
         public void ShowOrder()
         {
-            Console.WriteLine();
-
             //count shows every order and foreach shows every order in line
             Console.WriteLine($"{CYAN}Current orders in line:{NORMAL} ");
 
-            //_order.Dequeue();
             foreach (var order in _order)
             {
-                Console.WriteLine(order.PrintOrder);
+                order.PrintOrder();
             }
             Console.WriteLine("----------------------");
         }
@@ -82,22 +74,20 @@ namespace GenericCollections
             Console.WriteLine($"{CYAN}Next order in line:{NORMAL} ");
             if (_order.Count > 0)
             {
-                Console.WriteLine(_order.Peek());
+                var peekOrder = _order.Peek();
+                peekOrder.PrintOrder();
             }
             else
             {
                 Console.WriteLine("The que is empty");
             }
-            Console.WriteLine();
         }
 
         //writes out the amount the orders in que
         public void ShowOrderCount()
         {
             //shows the count in the order
-            Console.WriteLine();
-            Console.WriteLine($"{YELLOW}Orders in line:{NORMAL}\n{_order.Count}");
-            Console.WriteLine();
+            Console.WriteLine($"It is {CYAN}{_order.Count}{NORMAL} orders in line\n");
         }
     }
 }

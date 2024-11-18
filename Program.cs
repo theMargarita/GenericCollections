@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-namespace GenericCollections
+﻿namespace GenericCollections
 {
     internal class Program
     {
@@ -45,15 +41,18 @@ namespace GenericCollections
             var order3 = new Order(orderMenu3, 33);
             restaurant.CreateOrder(order3);
 
+            Console.WriteLine("----------------------");
             restaurant.ShowOrder();
 
             restaurant.HandleOrder();
 
-
-
             restaurant.ShowOrderCount();
 
             restaurant.ShowNextOrder();
+
+            restaurant.HandleOrder();
+
+            
 
         }
     }

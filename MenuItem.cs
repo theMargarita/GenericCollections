@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GenericCollections
+﻿namespace GenericCollections
 {
     internal class MenuItem
     {
