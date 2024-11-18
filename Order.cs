@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-
-namespace GenericCollections
+﻿namespace GenericCollections
 {
     internal class Order
     {
@@ -11,6 +7,8 @@ namespace GenericCollections
         string GREEN = Console.IsOutputRedirected ? "" : "\x1b[92m";
         string YELLOW = Console.IsOutputRedirected ? "" : "\x1b[93m";
         string CYAN = Console.IsOutputRedirected ? "" : "\x1b[96m";
+        string UNDERLINE = Console.IsOutputRedirected ? "" : "\x1b[4m";
+        string NOUNDERLINE = Console.IsOutputRedirected ? "" : "\x1b[24m";
 
 
         static int orderIdCounter = 1;
@@ -38,34 +36,33 @@ namespace GenericCollections
             return total;
         }
        
+        //Method for printing correct order
         public void PrintOrder()
         {
-            Console.WriteLine($"{_orderId}");
+            Console.WriteLine($"{YELLOW}Order {_orderId}{NORMAL}");
+            //every menuitem in orderITems to show the correct order with name, food, and the exact price
             foreach(var menuItems in _orderItems)
             {
-                Console.WriteLine($"{menuItems.Name}, Total: {Total()}");
+                //to specify the menu items name and price 
+                Console.WriteLine($"{menuItems.Name} - {menuItems.Price:C}");
             }
+            Console.WriteLine($"Table number: {tableNumber}\n{UNDERLINE}Total: {Total():C}{NOUNDERLINE}");
+            Console.WriteLine();
         }
 
+        public bool FinishedOrder()
+        {
+            bool finishedOrder = true;
+            return finishedOrder;
+        }
 
         //converts an object to its string representation so that it is sutible for display
+        //to under stand the ToString method more
         public override string ToString()
         {
-            return ($"{YELLOW}Order number:{NORMAL} {orderIdCounter}\n" +
+            //
+            return ($"{YELLOW}Order number:{NORMAL} {_orderId}\n" +
                 $"Table number: {tableNumber}\nTotal: {Total():C}\n ");
         }
-
-
-        //public void Orders()
-        //{
-        //    Console.WriteLine($"Order: {orderIdCounter}");
-        //    foreach (var item in _orderItems)
-        //    {
-        //        Console.WriteLine($"1: {item.Name}");
-        //    }
-
-        //    Console.WriteLine($"Total amount: {Total:C} - Tablenumber: {tableNumber}");
-        //    Console.WriteLine("---------------------");
-        //}
     }
 }
